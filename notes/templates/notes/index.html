@@ -1,0 +1,25 @@
+{% extends "notes/base.html" %}
+{% load static %}
+
+{% block content %}
+<img src="{% static 'notes/img/logo-getit.png' %}" />
+<p>Como o Post-it, mas com outro verbo</p>
+
+<form method="post">
+<!-- Template tag para prevenção de ataques  -->
+    {% csrf_token %}
+  <label for="titulo">Título</label>
+  <input id="titulo" type="text" name="titulo" />
+  <label for="detalhes">Detalhes</label>
+  <textarea id="detalhes" name="detalhes"></textarea>
+  <input type="submit" />
+</form>
+
+<ul>
+<!-- Jeito de percorrer as anotações e mostrar cada uma em uma <li> diferente -->
+    {% for note in notes %}
+    <li>{{ note.title }}</li>
+    <div>{{ note.content }}</div>
+    {% endfor %}
+</ul>
+{% endblock %}
