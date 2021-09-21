@@ -16,3 +16,30 @@ def index(request):
     # Carregando os dados do banco de dados, tem todas as notas contidas nele
         all_notes = Note.objects.all()
         return render(request, 'notes/index.html', {'notes': all_notes})
+
+def remove_note(request):
+    if request.method == 'POST':
+        # pega o ID da note que será removida
+        id = request.POST.get('id')
+        # filtra pelo ID pego na linha anterior e deleta do db
+        Note.objects.filter(id=id).delete()
+        return redirect('index')
+    else:
+        all_notes = Note.objects.all()
+        return render(request, 'notes/index.html', {'notes': all_notes})
+    
+def update_note(request):
+    if request.method == 'POST':
+        # pega as informações da note editada
+        id = request.POST.get('id')
+        title = request.POST.get('title')
+        content = request.POST.get('content')
+        # Atualiza e salva a note no db
+        modified_note = Note(id = id, title = title, content = content)
+        modified_note.save()
+        return redirect('index')
+    else:
+    # o modelo Note é importado e são carregadas todas as entradas dessa tabela 
+    # Carregando os dados do banco de dados, tem todas as notas contidas nele
+        all_notes = Note.objects.all()
+        return render(request, 'notes/index.html', {'notes': all_notes})

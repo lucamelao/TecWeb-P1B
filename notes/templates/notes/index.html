@@ -2,24 +2,64 @@
 {% load static %}
 
 {% block content %}
-<img src="{% static 'notes/img/logo-getit.png' %}" />
-<p>Como o Post-it, mas com outro verbo</p>
+<!-- <img src="{% static 'notes/img/logo-getit.png' %}" />
+<p>Como o Post-it, mas com outro verbo</p> -->
+<div class="appbar">
+  <img src="{% static 'notes/img/logo-getit.png' %}" class="logo"/>
+  <span class="subtitle">Como o Post-it, mas com outro verbo</span>
+</div>
 
-<form method="post">
-<!-- Template tag para prevenção de ataques  -->
-    {% csrf_token %}
-  <label for="titulo">Título</label>
-  <input id="titulo" type="text" name="titulo" />
-  <label for="detalhes">Detalhes</label>
-  <textarea id="detalhes" name="detalhes"></textarea>
-  <input type="submit" />
+<div class = "container">
+<form method="post" class = "form-card">
+  <!-- Template tag para prevenção de ataques  -->
+  {% csrf_token %}
+  <!-- <label for="titulo">Título</label> -->
+  <input
+  class="form-card-title"
+  type="text"
+  name="titulo"
+  placeholder="Titulo"
+  />
+  <!-- <label for="detalhes">Detalhes</label> -->
+  <textarea
+  class="autoresize"
+  name="detalhes"
+  placeholder="Digite o conteudo..."  
+  ></textarea>  
+<input class="btn" type="submit"/>
 </form>
+</div>
 
-<ul>
-<!-- Jeito de percorrer as anotações e mostrar cada uma em uma <li> diferente -->
-    {% for note in notes %}
-    <li>{{ note.title }}</li>
-    <div>{{ note.content }}</div>
-    {% endfor %}
-</ul>
+<div class = "card-container">
+<!-- Jeito de percorrer as anotações -->
+  {% for note in notes %}
+  <div class = "card">
+    <form class = "note-delete" method = "post" id = "delete-{id}" action = "/delete">{% csrf_token %}</form>
+    <form class = "note-update" method = "post" id = "update-{id}" action = "/update">{% csrf_token %}</form>
+
+        <!-- deleção de notes -->
+    <div>
+      <button form = "delete-{id}" class = "deleteX">
+        X
+      </button> 
+      <textarea name = "id" class = "id" form = "delete-{id}" >
+        {{note.id}}
+      </textarea>
+    </div>
+
+        <!--edição de notes-->
+    <div>
+      <button form = "update-{id}" class = "editIcon" action = "/update">
+        edit
+      </button> 
+      <textarea name = "id" class = "id" form = "update-{id}" >{{ note.id }}</textarea>
+    </div>
+
+    <textarea class = "card-title" name = "title" form = "update-{id}" >{{ note.title }}</textarea>
+    <div class = "card-content" form = "update-{id}">
+      <textarea name = "content" form="update-{id}">{{ note.content }}</textarea>
+    </div>
+  </div>
+  {% endfor %}
+</div>
 {% endblock %}
