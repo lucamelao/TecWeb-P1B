@@ -112,6 +112,7 @@ body {
   align-self: flex-start;
   font-family: 'Permanent Marker', cursive;
 }
+
 .card-content{
   display: flex;
   flex-direction: column;
@@ -121,8 +122,6 @@ body {
   justify-content: center;
   opacity: 0.8;
   height: 100%;
-
-
 }
 
 .card-rotation-1 {transform: rotate(5deg);}
@@ -198,4 +197,48 @@ body {
   font-weight: bold;
   font-size: larger;
   color:red
+}
+
+.note-tag{
+  display: block;
+  font-weight: bold;
+  color:black;
+  border: black;
+  border-radius: 20%;
+  background-color: chartreuse;
+}
+
+.tags-button{
+  color:black;
+  font-weight: bold;
+  font-family: 'Permanent Marker', cursive;
+  margin: 10%;
+  position: relative;
+  right: 1%;
+}
+
+.tags{
+  border:10%;
+}
+
+.tags-container{
+  margin-left: auto;
+  margin-right: auto;
+  width: 15%;
+  position: relative;
+  top: 10%;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  flex-wrap: wrap;
+  align-items: center;
+  font-family: 'Permanent Marker', cursive;
+  font-size: larger;
+}
+
+.list-tags{
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  font-size: medium;
 }

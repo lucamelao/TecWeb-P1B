@@ -2,11 +2,15 @@
 {% load static %}
 
 {% block content %}
-<!-- <img src="{% static 'notes/img/logo-getit.png' %}" />
-<p>Como o Post-it, mas com outro verbo</p> -->
 <div class="appbar">
   <img src="{% static 'notes/img/logo-getit.png' %}" class="logo"/>
   <span class="subtitle">Como o Post-it, mas com outro verbo</span>
+  <form class = "list-tags" method = "post" action = "/all_tags">
+    {% csrf_token %}
+    <button class="tags-button" type="submit"> 
+      LISTA DE TAGS
+    </button>
+    </form>
 </div>
 
 <div class = "container">
@@ -25,6 +29,11 @@
   class="autoresize"
   name="detalhes"
   placeholder="Digite o conteudo..."  
+  ></textarea>  
+  <textarea
+  class="autoresize"
+  name="tag"
+  placeholder="Digite a tag..."  
   ></textarea>  
 <input class="btn" type="submit"/>
 </form>
@@ -59,6 +68,7 @@
     <div class = "card-content" form = "update-{id}">
       <textarea name = "content" form="update-{id}">{{ note.content }}</textarea>
     </div>
+    <!-- <div class = "note-tag">{{ note.tag }}</div> -->
   </div>
   {% endfor %}
 </div>
