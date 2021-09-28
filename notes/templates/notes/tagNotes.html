@@ -1,0 +1,29 @@
+{% extends "notes/base.html" %}
+{% load static %}
+
+{% block content %}
+<div class="appbar">
+  <img src="{% static 'notes/img/logo-getit.png' %}" class="logo"/>
+  <span class="subtitle">Como o Post-it, mas com outro verbo</span>
+  <form class = "list-tags" method = "post" id = "get-Tags" action = "/list_tags">{% csrf_token %}</form>
+  <button> 
+    <a href="../.." class = "list-tags"> HOME BUTTON </a> 
+  </button>
+</div>
+
+<main>
+<h1 class = "title-tag"> NOME DA TAG: {{tag}} </h1>
+<div class = "card-container">
+<!-- Jeito de percorrer as anotações -->
+  {% for note in notes %}
+  <div class = "card">
+    <textarea class = "card-title" name = "title" form = "update-{id}" >{{ note.title }}</textarea>
+    <div class = "card-content" form = "update-{id}">
+      <textarea name = "content" form="update-{id}">{{ note.content }}</textarea>
+    </div>
+    <div name = '{{tag.name}}' class = "note-tag">{{ note.tag }}</div>
+  </div>
+  {% endfor %}
+</div>
+{% endblock %}
+</main>
