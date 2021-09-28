@@ -36,12 +36,14 @@ def remove_note(request):
     if request.method == 'POST':
         # pega o ID da note que será removida
         id = request.POST.get('id')
-        tag = request.POST.get('tag')
+        tag_name = request.POST.get('tag')
         # filtra pelo ID pego na linha anterior e deleta do db
         Note.objects.filter(id=id).delete()
 
-        if tag != '':
+        tag = Tag.objects.filter(name = tag_name)[0]
+        if tag is not None:
             notes_with_tag = Note.objects.filter(tag = tag)
+            # se não houver notes com a tag em questão
             if len(notes_with_tag) == 0:
                 Tag.objects.filter(name = tag).delete()
                 
@@ -57,26 +59,21 @@ def update_note(request):
         id = request.POST.get('id')
         title = request.POST.get('title')
         content = request.POST.get('content')
-        # tag = request.POST.get('tag')
-        # Atualiza e salva a note no db
-        modified_note = Note(id = id, title = title, content = content)
-        modified_note.save()
+        # Atualiza a note no db
+        Note.objects.filter(id=id).update(title = title, content = content)
         return redirect('index')
     else:
     # o modelo Note é importado e são carregadas todas as entradas dessa tabela 
     # Carregando os dados do banco de dados, tem todas as notas contidas nele
         all_notes = Note.objects.all()
-        # tags = Tag.objects.all()
         return render(request, 'notes/index.html', {'notes': all_notes})
-        # , {'tags': tags}
 
 def group_per_tag(request):
     tag_name = request.POST.get('tag')
-    print(f'TAG NAME: {tag_name}')
+    # filtra notas com a tag desejada para agrupar
     group = Note.objects.filter(tag__name = tag_name)
-    print(f'GRUPO: {len(group)}')
     return render(request, 'notes/tagNotes.html', {'notes': group, 'tag': tag_name})
-
+    
 def list_tags(request):
     list = Tag.objects.all()
     return render(request, 'notes/tagsList.html', {'tags': list})

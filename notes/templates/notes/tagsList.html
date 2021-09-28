@@ -5,18 +5,19 @@
 <div class="appbar">
   <img src="{% static 'notes/img/logo-getit.png' %}" class="logo"/>
   <span class="subtitle">Como o Post-it, mas com outro verbo</span>
+  <button> 
+  <a href=".." class = "list-tags"> HOME BUTTON </a> 
+  </button>
 </div>
 
 <div class = "tags-container">
-  <h1>
-    TAGS LISTADAS
-  </h1>
-  {% for tag in tags %}
-  <form class = "list-tags" method = "post" action = "/notes_per_tag">
-    {% csrf_token %}
-    <textarea name = "tag" class="tags" type="submit"> {{tag.name}} </textarea>
-    <button class="tags" type="submit"> {{tag.name}} </button>
+  <h1>TAGS LISTADAS</h1>
+  <div class = "list-tags"> 
+    {% for tag in tags %}
+    <form id = "group_per_tag-{{tag.id}}" method = "post" action = "/group_per_tag">{% csrf_token %}</form>
+    <textarea class = "id" name = "tag" form = "group_per_tag-{{tag.id}}">{{tag.name}}</textarea>
+    <button class="card tag" formaction = "/group_per_tag" form = "group_per_tag-{{tag.id}}">{{tag.name}}</button>
     {% endfor %}
-</form>
+  </div>
 </div>
 {% endblock %}

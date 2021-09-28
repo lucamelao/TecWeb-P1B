@@ -10,8 +10,8 @@ urlpatterns = [
     path('', views.index, name='index'),
     path('delete', views.remove_note, name='remove_note'),
     path('update', views.update_note, name='update_note'),
-    path('all_tags', views.list_tags, name='list_tags'),
-    path('notes_per_tag', views.group_per_tag, name='group_per_tag'),
+    path('list_tags', views.list_tags, name='list_tags'),
+    path('group_per_tag', views.group_per_tag, name='group_per_tag'),
 ]
 
 
